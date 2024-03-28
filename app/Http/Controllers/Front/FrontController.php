@@ -18,6 +18,7 @@ use App\Models\UrgentVacancy;
 use App\Models\Employeereview;
 use App\Models\Order;
 use Session;
+use Auth;
 class FrontController extends Controller
 {
 
@@ -168,6 +169,12 @@ public function post_a_job($slug){
             $newData->phone = $request->phone;
             $newData->address = $request->address;
             $newData->payment_type = $request->payment_type;
+            $newData->user_id = Auth::user()->id;
+
+
+
+
+
             $newData->status = 'Pending';
             $newData->order_id = $request->id;
             $newData->payment_id = "PHSB- ".rand(1111111,9999999);
@@ -177,6 +184,8 @@ public function post_a_job($slug){
 
         }else{
 
+
+            Session::put('user_id',Auth::user()->id);
             Session::put('id', $request->id);
             Session::put('order_type', $request->order_type);
             Session::put('price', $request->price);
@@ -207,6 +216,21 @@ public function post_a_job($slug){
         $signature_key = "dbb74894e82415a2f7ff0ec3a97e4183";
 
         $url = "https://​sandbox​.aamarpay.com/jsonpost.php"; // for Live Transection use "https://secure.aamarpay.com/jsonpost.php"
+
+
+            $newData = new Order();
+            $newData->name = Session::get('name');
+            $newData->order_type = Session::get('order_type');
+            $newData->price = Session::get('price');
+            $newData->phone = Session::get('phone');
+            $newData->address = Session::get('address');
+            $newData->user_id = Session::get('user_id');
+          //   $newData->payment_type = $arrData->payment_type;
+          //   $newData->status = $arrData->pay_status;
+            $newData->order_id=Session::get('id');
+            $newData->payment_id =$tran_id;
+            $newData->save();
+
 
         $curl = curl_init();
 
@@ -270,11 +294,20 @@ public function post_a_job($slug){
 
         $request_id= $request->mer_txnid;
 
+        Order::where('payment_id', $request_id)
+       ->update([
+           'payment_type' => $request->payment_type,
+           'status' => $request->pay_status
+        ]);
+
         //verify the transection using Search Transection API
 
         $url = "http://sandbox.aamarpay.com/api/v1/trxcheck/request.php?request_id=$request_id&store_id=aamarpaytest&signature_key=dbb74894e82415a2f7ff0ec3a97e4183&type=json";
 
         //For Live Transection Use "http://secure.aamarpay.com/api/v1/trxcheck/request.php"
+
+
+
 
         $curl = curl_init();
 
@@ -298,17 +331,18 @@ public function post_a_job($slug){
 
         //new code start
 //dd($arrData);
-          $newData = new Order();
-          $newData->name = $arrData->cus_name;
-          $newData->order_type = $arrData->cus_add2;
-          $newData->price = $arrData->amount;
-          $newData->phone = $arrData->cus_phone;
-          $newData->address = $arrData->cus_add1;
-          $newData->payment_type = $arrData->payment_type;
-          $newData->status = $arrData->pay_status;
-          $newData->order_id=$arrData->cus_city;
-          $newData->payment_id =$arrData->mer_txnid;
-          $newData->save();
+        //   $newData = new Order();
+        //   $newData->name = $arrData->cus_name;
+        //   $newData->order_type = $arrData->cus_add2;
+        //   $newData->user_id = Session::get('user_id');
+        //   $newData->price = $arrData->amount;
+        //   $newData->phone = $arrData->cus_phone;
+        //   $newData->address = $arrData->cus_add1;
+        //   $newData->payment_type = $arrData->payment_type;
+        //   $newData->status = $arrData->pay_status;
+        //   $newData->order_id=$arrData->cus_city;
+        //   $newData->payment_id =$arrData->mer_txnid;
+        //   $newData->save();
         //new code end
 
 

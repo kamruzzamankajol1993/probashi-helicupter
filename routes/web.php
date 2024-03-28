@@ -33,6 +33,7 @@ use App\Http\Controllers\Admin\JobSeekerController;
 use App\Http\Controllers\Admin\JobController;
 use App\Http\Controllers\Backend\ServiceController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ClientController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -58,6 +59,28 @@ Route::get('payment',[FrontController::class,'payment'])->name('payment');
 Route::post('success',[FrontController::class,'success'])->name('success');
 Route::post('fail',[FrontController::class,'fail'])->name('fail');
 Route::get('cancel',[FrontController::class,'cancel'])->name('cancel');
+
+
+
+Route::get('userLogout',[LoginController::class,'userLogout'])->name('userLogout');
+
+Route::get('userDashboard',[LoginController::class,'userDashboard'])->name('userDashboard');
+
+
+Route::get('/userLoginToDashboard',[LoginController::class,'userLoginToDashboard'])->name('userLoginToDashboard');
+
+
+
+Route::get('/userLoginForm/{type}/{name}',[LoginController::class,'userLoginForm'])->name('userLoginForm');
+
+
+Route::post('/registrationToCheckout',[LoginController::class,'registrationToCheckout'])->name('registrationToCheckout');
+Route::post('/loginToCheckout',[LoginController::class,'loginToCheckout'])->name('loginToCheckout');
+
+
+Route::post('/registrationUser',[LoginController::class,'registrationUser'])->name('registrationUser');
+Route::post('/loginUser',[LoginController::class,'loginUser'])->name('loginUser');
+
 
 
 Route::get('/showLoginForm',[LoginController::class,'showLoginForm'])->name('showLoginForm');
@@ -142,6 +165,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::group(['prefix' => 'admin'], function () {
 
+
+
+    Route::resource('clientList', ClientController::class);
 
     Route::resource('serviceList', ServiceController::class);
 

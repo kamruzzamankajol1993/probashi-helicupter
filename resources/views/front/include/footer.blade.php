@@ -48,6 +48,21 @@
                     <p class="mt-2"> <a href="{{ route('index') }}">Home</a></p>
                     <p class="mt-1"><a href=""><a href="{{ route('about_us') }}">About Us</a> </a></p>
                     <p class="mt-1"><a href="{{ route('contact') }}">Contact us </a></p>
+
+
+                    @if (Auth::guest())
+
+
+<p class="mt-1"><a href="{{ route('userLoginToDashboard') }}">Login/Register</a></p>
+
+
+                    @else
+                    <p class="mt-1"><a href="{{ route('userDashboard') }}">Dashboard</a></p>
+@endif
+
+
+
+
                 </div>
             </div>
 

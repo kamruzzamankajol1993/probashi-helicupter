@@ -48,6 +48,15 @@
 
 <li class="menu-title">ORDER SECTION</li>
 
+@if ($usr->can('client_add') || $usr->can('client_view') || $usr->can('client_delete') || $usr->can('client_update'))
+<li class="{{ Route::is('clientList.index') || Route::is('clientList.create') || Route::is('clientList.edit') ? 'active' : '' }}">
+    <a href="{{ route('clientList.index') }}">
+        <i class="uil-label"></i>
+        <span>Client List</span>
+    </a>
+</li>
+@endif
+
 <li>
     <a href="javascript: void(0);" class="has-arrow waves-effect">
         <i class="uil-label"></i>

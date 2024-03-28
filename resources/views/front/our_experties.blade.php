@@ -26,9 +26,16 @@ Offer | {{ $ins_name }}
                     </p>
                     <p class="text-xl font-bold "><span class="text-md font-bold text-[var(--color-primary)]">OFFER RATE </span>:
                         {{ $allOffersView->price }}</p>
-                    <button
-                        class="uppercase text-center p-2 border-2  rounded-lg  text-white bg-[var(--color-primary)] uppercase hover:text-[var(--color-primary)] hover:bg-white font-bold text-lg border-[var(--color-primary)]"><a
-                            href="{{ route('confirm_offer_order',$allOffersView->slug) }}">Buy now</a> </button>
+                        @if (Auth::guest())
+
+                        <button class="uppercase text-center p-2 border-2  rounded-lg  text-white bg-[var(--color-primary)] uppercase hover:text-[var(--color-primary)] hover:bg-white font-bold text-lg border-[var(--color-primary)]"></i><a href="{{ route('userLoginForm',['type'=>'offer','name'=>$allOffersView->slug]) }}">Buy now</a></button>
+
+
+                        @else
+                <button
+                    class="uppercase text-center p-2 border-2  rounded-lg  text-white bg-[var(--color-primary)] uppercase hover:text-[var(--color-primary)] hover:bg-white font-bold text-lg border-[var(--color-primary)]"><a
+                        href="{{ route('confirm_offer_order',$allOffersView->slug) }}">Buy now</a> </button>
+                        @endif
                 </div>
             </div>
             @endforeach

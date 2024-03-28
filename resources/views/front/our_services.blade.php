@@ -22,7 +22,7 @@ Confirm Order | {{ $ins_name }}
 
             <div class="  w-full h-[400px]">
 
-                <form class="w-full max-w-lg" id="form" method="post" action="{{route('final_confirm')}}">
+                <form class="w-full max-w-lg" enctype="multipart/form-data" id="form" method="post" action="{{route('final_confirm')}}">
 @csrf
                     <input value="offer" name="order_type" type="hidden" >
                     <input value="{{$allOffers->price}}"  name="price" type="hidden" >
@@ -36,14 +36,14 @@ Confirm Order | {{ $ins_name }}
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
                           Full Name
                         </label>
-                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" required name="name" type="text" placeholder="Full Name">
+                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" required value="{{ Auth::user()->name }}" name="name" type="text" placeholder="Full Name">
                       </div>
 
                       <div class="w-full md:w-1/2 px-3">
                         <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name">
                           Phone Number
                         </label>
-                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" required name="phone" type="text" placeholder="Phone Number">
+                        <input class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" required value="{{ Auth::user()->phone }}" name="phone" type="text" placeholder="Phone Number">
                       </div>
 
 
@@ -57,6 +57,10 @@ Confirm Order | {{ $ins_name }}
                           <textarea class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" id="grid-last-name" required name="address"  placeholder="Address"></textarea>
 
                       </div>
+
+
+                      
+
 
 
                       <div class="w-full px-3 mt-3">
@@ -81,7 +85,7 @@ Confirm Order | {{ $ins_name }}
 
                 <div
                 class=" card md:w-[350px]  bg-base-100 shadow-md hover:shadow-xl xl:transition xl:duration-300 xl:transform xl:hover:scale-110">
-                
+
                 <div class="card-body">
 
                     <p class="mt-2"><span class="text-md font-bold text-[var(--color-primary)]">DEPARTURE </span>: {{$allOffers->departure}}</p>
@@ -92,7 +96,7 @@ Confirm Order | {{ $ins_name }}
                     </p>
                     <p class="text-xl font-bold "><span class="text-md font-bold text-[var(--color-primary)]">OFFER RATE </span>:
                         {{$allOffers->price}}</p>
-               
+
                 </div>
             </div>
 
@@ -105,4 +109,5 @@ Confirm Order | {{ $ins_name }}
 
     </section>
 </main>
+<br><br><br>
 @endsection

@@ -18,7 +18,15 @@
         <p class="p-4">{!! $missionLists->des !!}
 
     </p>
+
+    @if (Auth::guest())
+
+    <button class="flex border-2 p-4 gap-4 rounded-full bg-[var(--color-primary)] text-white font-bold"><a href="">Rent:{{ $missionLists->price }} BDT</a><i class="text-xl fa-solid fa-helicopter"></i><a href="{{ route('userLoginForm',['type'=>'service','name'=>$missionLists->slug]) }}">BOOK NOW</a></button>
+
+    @else
     <button class="flex border-2 p-4 gap-4 rounded-full bg-[var(--color-primary)] text-white font-bold"><a href="">Rent:{{ $missionLists->price }} BDT</a><i class="text-xl fa-solid fa-helicopter"></i><a href="{{ route('confirm_service_order',$missionLists->slug) }}">BOOK NOW</a></button>
+@endif
+
         <!-- <h6 class="text-center font-bold text-3xl mt-4 p-4 uppercase">Helicopter Chartered Flight</h6>
         <div class="p-4  md:h-[650px]  mt-8">
             <img class="w-full h-full place-items-center " src="./our service/service1.jpg" alt="">

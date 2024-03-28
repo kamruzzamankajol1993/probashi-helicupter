@@ -54,7 +54,7 @@ All Offer Order List | {{ $ins_name }}
                                             <th>Offer Detail</th>
                                             <th>Payment Detail</th>
                                             <th>Order Status</th>
-
+<th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -115,6 +115,55 @@ Pending
                                     @else
 {{ $user->confirm_status }}
                                     @endif
+</td>
+
+<td>
+
+    <button type="button"  data-bs-toggle="modal" data-bs-target=".bs-example-modal-lgrree{{ $user->id }}"
+        class="btn btn-success waves-light waves-effect  btn-sm" >
+        <i class="fas fa-eye"></i></button>
+
+
+            <!-- Modal -->
+      <div class="modal fade bs-example-modal-lgrree{{ $user->id }}" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="exampleModalLabel"> Nid Information</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+</button>
+</div>
+<div class="modal-body">
+
+<?php
+
+$usersOrderUser = DB::table('users')->where('id',$user->user_id)->first();
+
+?>
+
+@if(!$usersOrderUser)
+
+
+@else
+
+<div class="row">
+
+<div class="col-md-12">
+<img src="{{ asset('/') }}{{ $usersOrderUser->nid_front }}" style="width:700px;">
+</div>
+
+<div class="col-md-12">
+<img src="{{ asset('/') }}{{ $usersOrderUser->nid_back }}" style="width:700px;">
+</div>
+
+</div>
+@endif
+
+</div>
+
+</div>
+</div>
+</div>
 </td>
 
 
